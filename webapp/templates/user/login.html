@@ -15,18 +15,18 @@
            <form action="{{ url_for('user.process_login') }}" method="POST">
                {{ form.hidden_tag() }}
                <div class="form-group">
-                   {{ form.username.label }}
-                   {{ form.username() }}
+                    {{ form.username.label }}
+                    {{ form.username() }}
                </div>
                <div class="form-group">
-                   {{ form.password.label }}
-                   {{ form.password() }}
+                    {{ form.password.label }}
+                    {{ form.password() }}
                </div>
                <div class="form-group form-check">
-                 {{ form.remember_me() }}
-                 {{ form.remember_me.label(class_='form-check-label') }}
+                  {{ form.remember_me() }}
+                  {{ form.remember_me.label(class_='form-check-label') }}
                </div>
-                   {{ form.submit() }}
+                {{ form.submit() }}
            </form>
         </div>
         <dib class="col-8">

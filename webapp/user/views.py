@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, flash, redirect, url_for
 from flask_login import current_user, login_user, logout_user
 
-from webapp.user.forms import LoginForm
+from webapp.db import db
+from webapp.user.forms import LoginForm, RegistrationForm
 from webapp.user.models import User
 
 
@@ -36,3 +37,25 @@ def logout():
     logout_user()
     flash('Вы успешно разлогинились!')
     return redirect(url_for('news.index'))
+
+@blueprint.route('/register')
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('news.index'))
+    title = 'Регистрация'
+    registration_form = RegistrationForm()
+    return render_template('user/registration.html', page_title=title, form=registration_form)
+
+
+@blueprint.route('/process-reg', methods=['POST'])
+def process_reg():
+    registration_form = RegistrationForm()
+    if registration_form.validate_on_submit():
+        news_user = User(username=registration_form.username.data, email=registration_form.email.data, role='user')
+        news_user.set_password(registration_form.password.data)
+        db.session.add(news_user)
+        db.session.commit()
+        flash("Вы успешно зарегистрировались!")
+        return redirect(url_for('user.login'))
+    flash("Пожалуйста, исправте ошибки в форме")
+    return redirect(url_for('user.register'))
