@@ -14,7 +14,7 @@ with app.app_context():
         print("Такой пользователь уже существует!")
         sys.exit(0)
 
-    password =  getpass("Введите ппроль: ")
+    password =  getpass("Введите пароль: ")
     password2 = getpass("Повторите пароль: ")
     if not password == password2:
         print("Пароли не совпадают")
